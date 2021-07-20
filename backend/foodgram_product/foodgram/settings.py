@@ -21,8 +21,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'foodgram_api',
+    'recipe_api.apps.RecipeApiConfig',
+    'user_api.apps.UserAppConfig',
     'djoser',
+    'colorfield',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +62,7 @@ DATABASES = {
     'default': env.db()
 }
 
-AUTH_USER_MODEL = 'foodgram_api.CustomUser'
+AUTH_USER_MODEL = 'user_api.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -102,7 +104,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
-    )
+    ),
 }
 
 DJOSER = {
@@ -111,7 +113,7 @@ DJOSER = {
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
-         'user_create': 'foodgram_api.serializers.UserRegistrationSerializer'
+         'user_create': 'user_api.serializers.UserRegistrationSerializer'
     }
 }
 

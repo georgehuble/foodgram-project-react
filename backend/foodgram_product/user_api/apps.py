@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class RecipeAppConfig(AppConfig):
+class UserAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'foodgram_api'
+    name = 'user_api'

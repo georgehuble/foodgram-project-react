@@ -1,15 +1,14 @@
-from django.contrib.auth import get_user_model
 from django.core.mail import send_mail, mail_admins
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer
-from .models import Teg, Ingredient, Recipe
 
-User = get_user_model()
+from .models import CustomUser
 
 
 class UserRegistrationSerializer(BaseUserRegistrationSerializer):
     class Meta(BaseUserRegistrationSerializer.Meta):
+        model = CustomUser
         fields = ('email', 'id', 'username', 'password',
                   'first_name', 'last_name')
 
@@ -17,27 +16,27 @@ class UserRegistrationSerializer(BaseUserRegistrationSerializer):
 class UsersSerializer(serializers.ModelSerializer):
 
     class Meta:
+        model = CustomUser
         fields = ('email', 'username',
                   'first_name', 'last_name')
-        model = User
 
 
-class TegSerializer(serializers.ModelSerializer):
+class UserDetailSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Teg
-        fields = '__all__'
+        model = CustomUser
+        fields = ('email', 'username',
+                  'first_name', 'last_name',
+                  'is_subscribed')
 
 
-class IngredientSerializer(serializers.ModelSerializer):
+class UserMeSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Ingredient
-        fields = '__all__'
-
-
-class RecipeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Recipe
-        fields = '__all__'
+        model = CustomUser
+        fields = ('email', 'username',
+                  'first_name', 'last_name',
+                  'is_subscribed')
 
 
 class TokenObtainPairNoPasswordSerializer(TokenObtainPairSerializer):
@@ -49,7 +48,7 @@ class TokenObtainPairNoPasswordSerializer(TokenObtainPairSerializer):
         attrs.update({'password': ''})
         data = super(TokenObtainPairNoPasswordSerializer,
                      self).validate(attrs)
-        user = User.objects.get(email=self.context['request'].data.get('email')
+        user = CustomUser.objects.get(email=self.context['request'].data.get('email')
                                 )
         data = data["refresh"]
         send_mail(
@@ -62,7 +61,7 @@ class TokenObtainPairNoPasswordSerializer(TokenObtainPairSerializer):
         return {'message': 'Вам отправлено письмо с confirmation_code'}
 
 
-class TokenRefreshNoPassworSerializer(TokenRefreshSerializer):
+class TokenRefreshNoPasswordSerializer(TokenRefreshSerializer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['refresh'].required = False
