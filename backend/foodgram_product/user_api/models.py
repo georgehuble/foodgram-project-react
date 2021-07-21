@@ -21,7 +21,7 @@ class CustomUser(AbstractUser):
                                  verbose_name='Фамилия')
     is_subscribed = models.BooleanField(default=False)
 
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'is_subscribed']
+    REQUIRED_FIELDS = ['username']
     USERNAME_FIELD = 'email'
 
     def get_short_name(self):

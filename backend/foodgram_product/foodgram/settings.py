@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'recipe_api.apps.RecipeApiConfig',
     'user_api.apps.UserAppConfig',
+    'follow_api.apps.FollowConfig',
     'djoser',
     'colorfield',
 ]

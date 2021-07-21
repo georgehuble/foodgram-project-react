@@ -16,8 +16,8 @@ class Tag(models.Model):
                             blank=True)
 
     class Meta:
-        verbose_name = "Тег"
-        verbose_name_plural = "Теги"
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
 
     def __str__(self):
         return f'{self.name}'
@@ -78,20 +78,20 @@ class Recipe(models.Model):
         return f'{self.name}'
 
 
-class Favorite(models.Model):
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
-                               verbose_name='Автор')
-    name = models.ForeignKey(Recipe, on_delete=models.CASCADE,
-                             verbose_name='Название рецепта')
-
-    class Meta:
-        UniqueConstraint(fields=['author', 'name'], name='favorite')
-        unique_together = ('author', 'name')
-        verbose_name = 'Избранноe'
-        verbose_name_plural = 'Избранноe'
-
-    def __str__(self):
-        return f'{self.author}'
+# class Favorite(models.Model):
+#     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
+#                                verbose_name='Автор')
+#     name = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+#                              verbose_name='Название рецепта')
+#
+#     class Meta:
+#         UniqueConstraint(fields=['author', 'name'], name='favorite')
+#         unique_together = ('author', 'name')
+#         verbose_name = 'Избранноe'
+#         verbose_name_plural = 'Избранноe'
+#
+#     def __str__(self):
+#         return f'{self.author}'
 
 
 class Shopping(models.Model):

@@ -1,7 +1,5 @@
-from django.http import Http404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import mixins, permissions, status
-from rest_framework.response import Response
+from rest_framework import mixins, permissions
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.pagination import PageNumberPagination
 
@@ -27,11 +25,10 @@ class MixinsViewSet(mixins.CreateModelMixin,
 class RecipeListView(MixinsViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
-    filter_backends = (DjangoFilterBackend, )
-    filterset_fields = ('category', 'in_stock')
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('author', 'name')
     permission_classes = [permissions.AllowAny]
     pagination_class = TalentSearchpagination
-
 
 
 class IngredientListView(MixinsViewSet):
@@ -45,5 +42,12 @@ class IngredientListView(MixinsViewSet):
 class TagsView(MixinsViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-    filter_backends = (DjangoFilterBackend, )
+    filter_backends = (DjangoFilterBackend,)
     permission_classes = [permissions.AllowAny]
+
+
+# class FavoriteView(MixinsViewSet):
+#     queryset = Favorite.objects.all()
+#     serializer_class = FavoriteSerializer
+#     filter_backends = (DjangoFilterBackend,)
+#     permission_classes = [permissions.IsAuthenticated]

@@ -38,4 +38,4 @@ sqlparse==0.4.1
 uritemplate==3.0.1
 urllib3==1.26.4
 virtualenv==20.4.7
-django-colorfield
+django-colorfield==0.4.2
