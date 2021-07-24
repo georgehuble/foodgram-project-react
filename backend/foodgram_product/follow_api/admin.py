@@ -1,8 +1,9 @@
 from django.contrib import admin
 
-from follow_api.models import Favorite
+from follow_api.models import Favourite
 
 
-@admin.register(Favorite)
-class AdminFavorite(admin.ModelAdmin):
-    list_display = ('recipe', 'user')
+@admin.register(Favourite)
+class AdminFavourite(admin.ModelAdmin):
+    list_display = ('name', 'user', 'id')
+    readonly_fields = ('id',)

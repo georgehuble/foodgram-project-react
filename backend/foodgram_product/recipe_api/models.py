@@ -45,7 +45,7 @@ class Ingredient(models.Model):
 class Recipe(models.Model):
     author = models.ForeignKey(CustomUser,
                                on_delete=models.CASCADE,
-                               related_name='recipe',
+                               related_name='recipes',
                                verbose_name='Автор',
                                blank=False)
     name = models.CharField(max_length=30,
@@ -69,6 +69,8 @@ class Recipe(models.Model):
                                                    MinValueValidator(1)],
                                        default=1,
                                        blank=False)
+    favourites = models.ManyToManyField(CustomUser, related_name='favourite',
+                                        default=None, blank=True)
 
     class Meta:
         verbose_name = 'Рецепт'
@@ -76,22 +78,6 @@ class Recipe(models.Model):
 
     def __str__(self):
         return f'{self.name}'
-
-
-# class Favorite(models.Model):
-#     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
-#                                verbose_name='Автор')
-#     name = models.ForeignKey(Recipe, on_delete=models.CASCADE,
-#                              verbose_name='Название рецепта')
-#
-#     class Meta:
-#         UniqueConstraint(fields=['author', 'name'], name='favorite')
-#         unique_together = ('author', 'name')
-#         verbose_name = 'Избранноe'
-#         verbose_name_plural = 'Избранноe'
-#
-#     def __str__(self):
-#         return f'{self.author}'
 
 
 class Shopping(models.Model):

@@ -11,7 +11,7 @@ class AdminIngredient(admin.ModelAdmin):
 
 @admin.register(Recipe)
 class AdminRecipe(admin.ModelAdmin):
-    list_display = ('name', 'author', 'text')
+    list_display = ('name', 'author', 'text', 'id')
     search_fields = ('name',)
 
 

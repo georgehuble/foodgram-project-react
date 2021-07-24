@@ -21,12 +21,6 @@ class RecipeSerializer(serializers.ModelSerializer):
     author = UserDetailSerializer(read_only=True)
 
     class Meta:
+        model = Recipe
         fields = ('author', 'name', 'image',
                   'text', 'ingredients', 'tag', 'cooking_time')
-        model = Recipe
-
-
-# class FavoriteSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         fields = ('id', 'name', 'image', 'cooking_time')
-#         model = Recipe

@@ -46,8 +46,4 @@ class TagsView(MixinsViewSet):
     permission_classes = [permissions.AllowAny]
 
 
-# class FavoriteView(MixinsViewSet):
-#     queryset = Favorite.objects.all()
-#     serializer_class = FavoriteSerializer
-#     filter_backends = (DjangoFilterBackend,)
-#     permission_classes = [permissions.IsAuthenticated]
+
