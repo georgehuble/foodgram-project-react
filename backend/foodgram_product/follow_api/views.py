@@ -9,19 +9,9 @@ from recipe_api.models import Recipe
 from user_api.models import CustomUser
 from rest_framework.viewsets import GenericViewSet
 from django_filters.rest_framework import DjangoFilterBackend
-from django.http import HttpResponse, Http404
 
 
-class MixinsViewSet(mixins.RetrieveModelMixin,
-                    mixins.CreateModelMixin,
-                    mixins.UpdateModelMixin,
-                    mixins.DestroyModelMixin,
-                    mixins.ListModelMixin,
-                    GenericViewSet):
-    pass
-
-
-class FavouriteView(MixinsViewSet):
+class FavouriteView(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = FavouriteSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -41,7 +31,7 @@ class FavouriteView(MixinsViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    def delete(self):
-        favourite_id = Favourite.kwargs.get('favourite_id')
-        favourite = Favourite.objects.filter(favourite=favourite_id)
-        return favourite
+    def destroy(self, request, pk=None):
+        if Favourite.objects.filter(name=request.user.pk).exists():
+            Favourite.objects.get(user=request.user.pk, name=self.kwargs.get('id')).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

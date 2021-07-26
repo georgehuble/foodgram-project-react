@@ -5,12 +5,13 @@ from user_api.models import CustomUser
 
 
 class Favourite(models.Model):
-    name = models.ForeignKey(Recipe,
-                             on_delete=models.CASCADE,
-                             related_name='names')
     user = models.ForeignKey(CustomUser,
                              on_delete=models.CASCADE,
-                             related_name='user')
+                             verbose_name='Пользователь')
+    name = models.ForeignKey(Recipe,
+                             on_delete=models.CASCADE,
+                             related_name='favourites',
+                             verbose_name='Наименование рецепта')
 
     class Meta:
         unique_together = ('name', 'user')

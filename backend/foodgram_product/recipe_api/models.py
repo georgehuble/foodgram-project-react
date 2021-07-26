@@ -69,8 +69,7 @@ class Recipe(models.Model):
                                                    MinValueValidator(1)],
                                        default=1,
                                        blank=False)
-    favourites = models.ManyToManyField(CustomUser, related_name='favourite',
-                                        default=None, blank=True)
+
 
     class Meta:
         verbose_name = 'Рецепт'

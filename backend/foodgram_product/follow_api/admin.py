@@ -7,3 +7,4 @@ from follow_api.models import Favourite
 class AdminFavourite(admin.ModelAdmin):
     list_display = ('name', 'user', 'id')
     readonly_fields = ('id',)
+    list_filter = ('user',)

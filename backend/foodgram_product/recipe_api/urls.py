@@ -14,5 +14,5 @@ urlpatterns = router.urls
 urlpatterns += [
     path('recipes/<id>/favourite/',
          FavouriteView.as_view({'get': 'retrieve',
-                                'destroy': 'delete'}))
+                                'delete': 'destroy'}))
 ]
