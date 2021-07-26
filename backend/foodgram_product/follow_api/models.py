@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import UniqueConstraint
 
 from recipe_api.models import Recipe
 from user_api.models import CustomUser
@@ -20,3 +21,21 @@ class Favourite(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+class Subscribe(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
+                             related_name='subscriber',
+                             verbose_name='Подписчик')
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
+                               related_name='following',
+                               verbose_name='Автор')
+
+    class Meta:
+        UniqueConstraint(fields=['author', 'user'], name='subscribe')
+        unique_together = ('author', 'user')
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+
+    def __str__(self):
+        return self.author.username

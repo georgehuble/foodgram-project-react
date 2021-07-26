@@ -1,7 +1,6 @@
 from colorfield.fields import ColorField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import UniqueConstraint
 
 from user_api.models import CustomUser
 
@@ -69,7 +68,6 @@ class Recipe(models.Model):
                                                    MinValueValidator(1)],
                                        default=1,
                                        blank=False)
-
 
     class Meta:
         verbose_name = 'Рецепт'

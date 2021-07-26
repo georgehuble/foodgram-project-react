@@ -1,18 +1,21 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
-from rest_framework.serializers import ReadOnlyField
+
 from recipe_api.models import Recipe
 
-from .models import Favourite
+from user_api.models import CustomUser
 
 
 class FavouriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = ('id', 'name', 'image', 'cooking_time')
+
+
+class SubscribeSerializer(serializers.ModelSerializer):
+    recipes = FavouriteSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Favourite
-        fields = ('id', 'name')
-
-    def to_representation(self, instance):
-        rep = super(FavouriteSerializer, self).to_representation(instance)
-        rep['name'] = instance.name.name
-        return rep
+        model = CustomUser
+        fields = ('id', 'email', 'username',
+                  'first_name', 'last_name',
+                  'is_subscribed', 'recipes',)

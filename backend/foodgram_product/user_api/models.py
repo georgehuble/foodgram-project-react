@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models import UniqueConstraint
 from django.utils.translation import gettext_lazy as _
 
 
@@ -33,21 +32,3 @@ class CustomUser(AbstractUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-
-
-class Subscribe(models.Model):
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
-                               related_name='following',
-                               verbose_name='Автор')
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
-                             related_name='follower',
-                             verbose_name='Подписчик')
-
-    class Meta:
-        UniqueConstraint(fields=['author', 'user'], name='subscribe')
-        unique_together = ('author', 'user')
-        verbose_name = 'Подписка'
-        verbose_name_plural = 'Подписки'
-
-    def __str__(self):
-        return self.author.username
