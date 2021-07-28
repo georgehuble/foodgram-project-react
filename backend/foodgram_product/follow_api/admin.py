@@ -1,8 +1,10 @@
 from django.contrib import admin
 
-from follow_api.models import Favourite
+from .models import Favourite
 
-from follow_api.models import Subscribe
+from .models import Subscribe
+
+from .models import Shopping
 
 
 @admin.register(Favourite)
@@ -15,3 +17,10 @@ class AdminFavourite(admin.ModelAdmin):
 @admin.register(Subscribe)
 class AdminFollow(admin.ModelAdmin):
     list_display = ('author', 'user')
+
+
+@admin.register(Shopping)
+class AdminShopping(admin.ModelAdmin):
+    list_display = ('name', 'user', 'id')
+    readonly_fields = ('id',)
+    list_filter = ('user',)

@@ -18,7 +18,7 @@ class CustomUser(AbstractUser):
     last_name = models.CharField(max_length=30,
                                  blank=False,
                                  verbose_name='Фамилия')
-    is_subscribed = models.BooleanField(default=False)
+    is_subscribed = models.BooleanField()
 
     REQUIRED_FIELDS = ['username']
     USERNAME_FIELD = 'email'

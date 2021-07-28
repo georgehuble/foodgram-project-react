@@ -16,7 +16,7 @@ class Favourite(models.Model):
 
     class Meta:
         unique_together = ('name', 'user')
-        verbose_name = 'Избранное'
+        verbose_name = 'избранное'
         verbose_name_plural = 'Избранное'
 
     def __str__(self):
@@ -32,10 +32,27 @@ class Subscribe(models.Model):
                                verbose_name='Автор')
 
     class Meta:
-        UniqueConstraint(fields=['author', 'user'], name='subscribe')
+        UniqueConstraint(fields=['author', 'user'], name='unique_together')
         unique_together = ('author', 'user')
-        verbose_name = 'Подписка'
+        verbose_name = 'подписки'
         verbose_name_plural = 'Подписки'
 
     def __str__(self):
         return self.author.username
+
+
+class Shopping(models.Model):
+    name = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                             verbose_name='Название рецепта')
+
+    user = models.ForeignKey(CustomUser,
+                             on_delete=models.CASCADE,
+                             verbose_name='Пользователь')
+
+    class Meta:
+        unique_together = ('name', 'user')
+        verbose_name = 'покупки'
+        verbose_name_plural = 'Покупки'
+
+    def __str__(self):
+        return f'{self.name}'

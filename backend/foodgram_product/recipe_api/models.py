@@ -68,24 +68,12 @@ class Recipe(models.Model):
                                                    MinValueValidator(1)],
                                        default=1,
                                        blank=False)
+    is_favorited = models.BooleanField()
+    is_in_shopping_cart = models.BooleanField()
 
     class Meta:
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class Shopping(models.Model):
-    name = models.ForeignKey(Recipe, on_delete=models.CASCADE,
-                             verbose_name='Название рецепта')
-
-    class Meta:
-        # UniqueConstraint(fields=['author', 'name'], name='favorite')
-        # unique_together = ('author', 'name')
-        verbose_name = 'Список покупок'
-        verbose_name_plural = 'Список покупок'
 
     def __str__(self):
         return f'{self.name}'

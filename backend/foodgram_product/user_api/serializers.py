@@ -4,6 +4,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, Toke
 from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer
 
 from .models import CustomUser
+from follow_api.models import Subscribe
 
 
 class UserRegistrationSerializer(BaseUserRegistrationSerializer):
@@ -22,6 +23,11 @@ class UsersSerializer(serializers.ModelSerializer):
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
+    is_subscribed = serializers.SerializerMethodField('check_if_is_subscribed')
+
+    def check_if_is_subscribed(self, obj):
+        user = self.context.get('request').user
+        return Subscribe.objects.filter(user=user, author=obj).exists()
 
     class Meta:
         model = CustomUser

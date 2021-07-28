@@ -3,7 +3,7 @@ from rest_framework import routers
 
 from .views import TagsView, RecipeListView, \
     IngredientListView
-from follow_api.views import FavouriteView
+
 
 router = routers.DefaultRouter()
 router.register(r'tags',
@@ -18,8 +18,6 @@ router.register(r'ingredient',
 
 urlpatterns = router.urls
 
-urlpatterns += [
-    path('recipes/<id>/favorite/',
-         FavouriteView.as_view({'get': 'retrieve',
-                                'delete': 'destroy'}))
-]
+# urlpatterns += [
+#     path('recipes/dowload_shopping_cart/')
+# ]

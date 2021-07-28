@@ -1,5 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import mixins, permissions
+from rest_framework import mixins, permissions, viewsets
+from rest_framework.generics import get_object_or_404
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.pagination import PageNumberPagination
 
@@ -44,6 +45,3 @@ class TagsView(MixinsViewSet):
     serializer_class = TagSerializer
     filter_backends = (DjangoFilterBackend,)
     permission_classes = [permissions.AllowAny]
-
-
-
