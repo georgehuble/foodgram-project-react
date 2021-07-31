@@ -114,3 +114,10 @@ class ShoppingView(viewsets.ViewSet):
         Shopping.objects.filter(user=request.user.pk,
                                 name=self.kwargs.get('id')).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# class ShoppingDownloadView(viewsets.ViewSet):
+#     permission_classes = [permissions.IsAuthenticated]
+#     serializer_class = FavouriteSerializer
+#     filter_backends = (DjangoFilterBackend,)
+#     lookup_field = 'id'
