@@ -1,8 +1,6 @@
-from django.urls import path
 from rest_framework import routers
 
-from .views import TagsView, RecipeListView, \
-    IngredientListView, IngredientDownloadView
+from .views import IngredientListView, RecipeListView, TagsView
 
 router = routers.DefaultRouter()
 router.register(r'tags',
@@ -16,7 +14,3 @@ router.register(r'ingredient',
                 basename='ingredient')
 
 urlpatterns = router.urls
-
-urlpatterns += [
-    path('recipes/dowload_shopping_cart/', IngredientDownloadView)
-]

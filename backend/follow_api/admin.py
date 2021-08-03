@@ -1,10 +1,6 @@
 from django.contrib import admin
 
-from .models import Favourite
-
-from .models import Subscribe
-
-from .models import Shopping
+from .models import Favourite, Shopping, Subscribe
 
 
 @admin.register(Favourite)

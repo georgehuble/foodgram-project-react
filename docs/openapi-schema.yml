@@ -634,7 +634,7 @@ paths:
           description: ''
       tags:
       - Ингредиенты
-  /api/users/set_password/:
+  /api/auth/users/set_password/:
     post:
       operationId: Изменение пароля
       description: 'Изменение пароля текущего пользователя'

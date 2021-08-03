@@ -1,10 +1,13 @@
-from django.core.mail import send_mail, mail_admins
+from django.core.mail import mail_admins, send_mail
+from djoser.serializers import \
+    UserCreateSerializer as BaseUserRegistrationSerializer
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
-from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer
+from rest_framework_simplejwt.serializers import (TokenObtainPairSerializer,
+                                                  TokenRefreshSerializer)
+
+from follow_api.models import Subscribe
 
 from .models import CustomUser
-from follow_api.models import Subscribe
 
 
 class UserRegistrationSerializer(BaseUserRegistrationSerializer):

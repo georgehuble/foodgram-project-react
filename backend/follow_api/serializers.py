@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from recipe_api.models import Recipe
-
 from user_api.models import CustomUser
 
 

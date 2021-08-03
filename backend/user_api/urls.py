@@ -1,7 +1,8 @@
-from django.urls import path, include
+from django.urls import path
 
-from .views import UsersViewSet, UserDetailViewSet
 from follow_api.views import SubscribeListView
+
+from .views import UserDetailViewSet, UsersViewSet
 
 urlpatterns = [
     path('users/', UsersViewSet.as_view({'get': 'list'}),

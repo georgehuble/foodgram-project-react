@@ -1,5 +1,5 @@
 from colorfield.fields import ColorField
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from user_api.models import CustomUser
@@ -77,3 +77,27 @@ class Recipe(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+class IngredientInRecipe(models.Model):
+    ingredient = models.ForeignKey(
+        Ingredient,
+        on_delete=models.CASCADE,
+        verbose_name='Ингредиент в рецепте'
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        verbose_name='Рецепт'
+    )
+    amount = models.PositiveSmallIntegerField(
+        null=True,
+        verbose_name='Количество ингредиента'
+    )
+
+    class Meta:
+        verbose_name = 'Количество ингредиента в рецепте'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return f'{self.ingredient} in {self.recipe}'

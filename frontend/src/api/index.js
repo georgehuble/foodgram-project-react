@@ -60,7 +60,7 @@ class Api {
 
   signup ({ email, password, username, first_name, last_name }) {
     return fetch(
-      `/api/users/`,
+      `/api/auth/users/`,
       {
         method: 'POST',
         headers: this._headers,
@@ -74,7 +74,7 @@ class Api {
   getUserData () {
     const token = localStorage.getItem('token')
     return fetch(
-      `/api/users/me/`,
+      `/api/auth/users/me/`,
       {
         method: 'GET',
         headers: {
@@ -88,7 +88,7 @@ class Api {
   changePassword ({ current_password, new_password }) {
     const token = localStorage.getItem('token')
     return fetch(
-      `/api/users/set_password/`,
+      `/api/auth/users/set_password/`,
       {
         method: 'POST',
         headers: {
@@ -388,7 +388,7 @@ class Api {
   downloadFile () {
     const token = localStorage.getItem('token')
     return fetch(
-      `/api/recipes/download_shopping_cart/`,
+      `/api/download_shopping_cart/`,
       {
         method: 'GET',
         headers: {

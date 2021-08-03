@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Tag, Ingredient, Recipe
-from user_api.serializers import UserDetailSerializer
 
 from follow_api.models import Favourite, Shopping
+from user_api.serializers import UserDetailSerializer
+
+from .models import Ingredient, Recipe, Tag
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -14,6 +15,12 @@ class TagSerializer(serializers.ModelSerializer):
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('name', 'amount', 'measurement_unit')
+        model = Ingredient
+
+
+class DownloadSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ('',)
         model = Ingredient
 
 

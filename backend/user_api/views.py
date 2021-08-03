@@ -2,10 +2,10 @@ from rest_framework import mixins
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
+from recipe_api.views import TalentSearchpagination
 
 from .models import CustomUser
-from .serializers import (UsersSerializer, UserDetailSerializer)
-from recipe_api.views import TalentSearchpagination
+from .serializers import UserDetailSerializer, UsersSerializer
 
 
 class MixinsViewSet(mixins.ListModelMixin,
