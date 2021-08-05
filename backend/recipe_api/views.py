@@ -4,8 +4,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import GenericViewSet
 
 from .models import Ingredient, Recipe, Tag
-from .serializers import (IngredientSerializer,
-                          RecipeSerializer, TagSerializer)
+from .serializers import IngredientSerializer, RecipeSerializer, TagSerializer
 
 
 class TalentSearchpagination(PageNumberPagination):
