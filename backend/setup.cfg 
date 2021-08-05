@@ -8,9 +8,9 @@ exclude =
     venv/,
     env/
 per-file-ignores =
-    */settings.py:E501,
-    ./backend/recipe_api/serializers.py:E501,
-    /user_api/forms.py:F401,
-    /backend/user_api/serializers.py:E501,
-    */serializers.py:N400
+    */foodgram/settings.py:E501,
+    */recipe_api/serializers.py:E501,
+    */user_api/forms.py:F401,
+    */user_api/serializers.py:E501,
+    */user_api/serializers.py:N400
 max-complexity = 10
