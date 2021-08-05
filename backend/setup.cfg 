@@ -1,8 +1,8 @@
 [flake8]
 ignore =
     W503,
-    F811
-    F401
+    F811,
+    F401,
     E124
 exclude =
     tests/,
@@ -10,9 +10,9 @@ exclude =
     venv/,
     env/
 per-file-ignores =
-    ./backend/foodgram/settings.py:E501
-    ./backend/recipe_api/serializers.py:E501
-    ./backend/user_api/forms.py:F401
-    ./backend/user_api/serializers.py:E501
+    ./backend/foodgram/settings.py:E501,
+    ./backend/recipe_api/serializers.py:E501,
+    ./backend/user_api/forms.py:F401,
+    ./backend/user_api/serializers.py:E501,
     ./backend/user_api/serializers.py:N400
 max-complexity = 10
