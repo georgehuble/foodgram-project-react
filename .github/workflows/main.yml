@@ -41,7 +41,7 @@ jobs:
           uses: docker/build-push-action@v2
           with:
             push: true
-            tags: georgehubdock/foodgram:v1.0.0
+            tags: georgehubdock/foodgram:latest
             context: ./backend/
      
   deploy:
@@ -58,10 +58,10 @@ jobs:
             passphrase: ${{ secrets.PASSPHRASE }}
             stack_file_name: docker-compose.yaml
             script: |
-              sudo docker pull georgehubdock/foodgram:v1.0.0
+              sudo docker pull georgehubdock/foodgram:latest
               sudo docker-compose stop
               sudo docker-compose rm web
-              touch home/backend/.env
+              touch .env
               echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
               echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
               echo DB_NAME=${{ secrets.DB_NAME }} >> .env
