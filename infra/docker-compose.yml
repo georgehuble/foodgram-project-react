@@ -8,7 +8,7 @@ services:
       - ../backend/.env
 
   backend:
-    image: georgehubdock/foodgram:v1.0.0
+    image: georgehubdock/foodgram:latest
     restart: always
     depends_on:
       - db
@@ -16,7 +16,7 @@ services:
       - static_value:/static/
       - media_value:/media/
     env_file:
-      - ../backend/.env
+      - ./.env
 
   frontend:
     build:
