@@ -18,6 +18,7 @@ services:
     env_file:
       - ../backend/.env
 
+
   frontend:
     image: georgehubdock/foodgram_front:latest
     volumes:
