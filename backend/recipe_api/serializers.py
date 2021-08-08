@@ -1,5 +1,6 @@
-from follow_api.models import Favourite, Shopping
 from rest_framework import serializers
+
+from follow_api.models import Favourite, Shopping
 from user_api.serializers import UserDetailSerializer
 
 from .models import Ingredient, Recipe, Tag

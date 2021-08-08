@@ -1,4 +1,5 @@
 from django.urls import path
+
 from follow_api.views import SubscribeListView
 
 from .views import UserDetailViewSet, UsersViewSet
