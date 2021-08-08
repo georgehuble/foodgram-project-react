@@ -70,16 +70,7 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'foodgram',
-#         'USER': 'admin',
-#         'PASSWORD': 'admin',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5433',
-#     }
-# }
+
 AUTH_USER_MODEL = 'user_api.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
