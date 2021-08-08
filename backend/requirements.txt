@@ -41,3 +41,4 @@ virtualenv==20.4.7
 django-colorfield
 gunicorn==20.0.4
 isort==5.9.3
+python-dotenv

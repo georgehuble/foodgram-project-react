@@ -1,13 +1,17 @@
-import os
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-n0obw=+vm^t%ddi4htqn+u%xdp^fe9_)+53zm6%59v4q7-v83c'
+SECRET_KEY = os.getenv('KEY_SECRET')
 
 DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '130.193.43.210', 'selesta.me', 'www.selesta.me']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,15 +61,24 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DB_ENGINE'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'foodgram',
+#         'USER': 'admin',
+#         'PASSWORD': 'admin',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5433',
+#     }
+# }
 AUTH_USER_MODEL = 'user_api.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
