@@ -16,7 +16,7 @@ services:
       - static_value:/static/
       - media_value:/media/
     env_file:
-      - ../backend/.env
+      - .env
 
   frontend:
     build:
