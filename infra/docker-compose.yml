@@ -7,6 +7,7 @@ services:
     env_file:
       - ../backend/.env
 
+
   backend:
     image: georgehubdock/foodgram:latest
     restart: always
@@ -17,6 +18,7 @@ services:
       - media_value:/media/
     env_file:
       - ../backend/.env
+
 
   frontend:
     image: georgehubdock/foodgram_front:latest
