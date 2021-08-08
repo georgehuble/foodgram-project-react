@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from recipe_api.models import IngredientInRecipe
 from rest_framework.decorators import api_view
-
 from follow_api.models import Shopping
 
 
