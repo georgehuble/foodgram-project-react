@@ -11,8 +11,7 @@ SECRET_KEY = os.getenv('KEY_SECRET')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '130.193.43.210', 'selesta.me', 'www.selesta.me']
-
+ALLOWED_HOSTS = ['130.193.43.210', 'localhost', 'selesta.me', 'www.selesta.me']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
