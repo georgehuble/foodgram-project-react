@@ -13,6 +13,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['130.193.43.210', 'localhost', 'selesta.me', 'www.selesta.me']
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
