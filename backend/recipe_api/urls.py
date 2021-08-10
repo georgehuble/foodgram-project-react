@@ -9,8 +9,8 @@ router.register(r'tags',
 router.register(r'recipes',
                 RecipeListView,
                 basename='recipes')
-router.register(r'ingredient',
+router.register(r'ingredients',
                 IngredientListView,
-                basename='ingredient')
+                basename='ingredients')
 
 urlpatterns = router.urls
