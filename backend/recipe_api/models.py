@@ -25,6 +25,10 @@ class Ingredient(models.Model):
     name = models.CharField(max_length=30, unique=True,
                             verbose_name='Наименование',
                             blank=False)
+    amount = models.IntegerField(validators=[MinValueValidator(0)],
+                                 verbose_name='Количество',
+                                 blank=True,
+                                 null=True)
     measurement_unit = models.CharField(max_length=30,
                                         verbose_name='Единица измерения',
                                         blank=False)
@@ -34,7 +38,7 @@ class Ingredient(models.Model):
         verbose_name_plural = 'Ингредиенты'
 
     def __str__(self):
-        return f'{self.name} {self.measurement_unit}'
+        return f'{self.name}, {self.amount} {self.measurement_unit}'
 
 
 class Recipe(models.Model):
