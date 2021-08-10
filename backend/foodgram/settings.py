@@ -9,10 +9,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('KEY_SECRET')
 
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ['130.193.43.210', 'localhost', 'selesta.me', 'www.selesta.me']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['130.193.43.210', 'localhost', 'selesta.me', 'www.selesta.me']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
