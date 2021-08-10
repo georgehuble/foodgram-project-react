@@ -27,7 +27,8 @@ class Ingredient(models.Model):
                             blank=False)
     amount = models.IntegerField(validators=[MinValueValidator(0)],
                                  verbose_name='Количество',
-                                 blank=False)
+                                 blank=True,
+                                 null=True)
     measurement_unit = models.CharField(max_length=30,
                                         verbose_name='Единица измерения',
                                         blank=False)
