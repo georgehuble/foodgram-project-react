@@ -17,12 +17,6 @@ class IngredientSerializer(serializers.ModelSerializer):
         model = Ingredient
 
 
-class DownloadSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = ('',)
-        model = Ingredient
-
-
 class RecipeSerializer(serializers.ModelSerializer):
     tag = TagSerializer(read_only=True, many=True)
     ingredients = IngredientSerializer(read_only=True, many=True)

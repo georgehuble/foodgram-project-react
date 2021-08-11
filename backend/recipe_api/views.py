@@ -33,6 +33,7 @@ class IngredientListView(MixinsViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('name',)
     permission_classes = [permissions.AllowAny]
     pagination_class = TalentSearchpagination
 
