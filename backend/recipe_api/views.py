@@ -3,7 +3,7 @@ from rest_framework import mixins, permissions
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import GenericViewSet
 
-from .models import Ingredient, Recipe, Tag
+from .models import Ingredients, Recipe, Tag
 from .serializers import IngredientSerializer, RecipeSerializer, TagSerializer
 
 
@@ -30,7 +30,7 @@ class RecipeListView(MixinsViewSet):
 
 
 class IngredientListView(MixinsViewSet):
-    queryset = Ingredient.objects.all()
+    queryset = Ingredients.objects.all()
     serializer_class = IngredientSerializer
     filter_backends = (DjangoFilterBackend,)
     permission_classes = [permissions.AllowAny]
