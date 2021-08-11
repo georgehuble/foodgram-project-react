@@ -21,7 +21,7 @@ class Tag(models.Model):
         return f'{self.name}'
 
 
-class Ingredients(models.Model):
+class Ingredient(models.Model):
     name = models.CharField(max_length=30, unique=True,
                             verbose_name='Наименование',
                             blank=False)
@@ -52,14 +52,13 @@ class Recipe(models.Model):
     text = models.TextField(max_length=250,
                             verbose_name='Описание',
                             blank=False)
-    ingredients = models.ForeignKey(Ingredients,
-                                    verbose_name='Ингредиенты',
-                                    blank=False,
-                                    on_delete=models.CASCADE,)
+    ingredients = models.ManyToManyField(Ingredient,
+                                         through='IngredientInRecipe',
+                                         related_name='ingredients')
     teg = models.ForeignKey(Tag,
                             verbose_name='Тег',
                             blank=False,
-                            on_delete=models.CASCADE,)
+                            on_delete=models.CASCADE, )
     cooking_time = models.IntegerField(verbose_name='Время приготовления',
                                        help_text='Время в минутах',
                                        validators=[MaxValueValidator(240),
@@ -79,7 +78,7 @@ class Recipe(models.Model):
 
 class IngredientInRecipe(models.Model):
     ingredient = models.ForeignKey(
-        Ingredients,
+        Ingredient,
         on_delete=models.CASCADE,
         verbose_name='Ингредиент в рецепте'
     )

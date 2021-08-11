@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import IngredientInRecipe, Ingredients, Recipe, Tag
+from .models import IngredientInRecipe, Ingredient, Recipe, Tag
 
 
-@admin.register(Ingredients)
+@admin.register(Ingredient)
 class AdminIngredient(admin.ModelAdmin):
     list_display = ('name', 'measurement_unit')
     search_fields = ('name',)

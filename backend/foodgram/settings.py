@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('KEY_SECRET')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['130.193.43.210', 'localhost', 'selesta.me', 'www.selesta.me']
 
