@@ -56,12 +56,14 @@ class Recipe(models.Model):
     text = models.TextField(max_length=250,
                             verbose_name='Описание',
                             blank=False)
-    ingredients = models.ManyToManyField(Ingredient,
-                                         verbose_name='Ингредиенты',
-                                         blank=False)
-    teg = models.ManyToManyField(Tag,
-                                 verbose_name='Тег',
-                                 blank=False)
+    ingredients = models.ForeignKey(Ingredient,
+                                    verbose_name='Ингредиенты',
+                                    blank=False,
+                                    on_delete=models.CASCADE,)
+    teg = models.ForeignKey(Tag,
+                            verbose_name='Тег',
+                            blank=False,
+                            on_delete=models.CASCADE,)
     cooking_time = models.IntegerField(verbose_name='Время приготовления',
                                        help_text='Время в минутах',
                                        validators=[MaxValueValidator(240),

@@ -7,13 +7,13 @@ from .models import Ingredient, Recipe, Tag
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ('name', 'color', 'slug')
+        fields = ('id', 'name', 'color', 'slug')
         model = Tag
 
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ('name', 'amount', 'measurement_unit')
+        fields = ('id', 'name', 'measurement_unit')
         model = Ingredient
 
 
