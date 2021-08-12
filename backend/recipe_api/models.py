@@ -25,10 +25,6 @@ class Ingredient(models.Model):
     name = models.CharField(max_length=30, unique=True,
                             verbose_name='Наименование',
                             blank=False)
-    amount = models.IntegerField(validators=[MinValueValidator(0)],
-                                 verbose_name='Количество',
-                                 blank=True,
-                                 null=True)
     measurement_unit = models.CharField(max_length=30,
                                         verbose_name='Единица измерения',
                                         blank=False)
@@ -38,7 +34,7 @@ class Ingredient(models.Model):
         verbose_name_plural = 'Ингредиенты'
 
     def __str__(self):
-        return f'{self.name}, {self.amount} {self.measurement_unit}'
+        return f'{self.name}'
 
 
 class Recipe(models.Model):
@@ -56,14 +52,14 @@ class Recipe(models.Model):
     text = models.TextField(max_length=250,
                             verbose_name='Описание',
                             blank=False)
-    ingredients = models.ForeignKey(Ingredient,
-                                    verbose_name='Ингредиенты',
-                                    blank=False,
-                                    on_delete=models.CASCADE,)
-    tags = models.ForeignKey(Tag,
-                             verbose_name='Тег',
-                             blank=False,
-                             on_delete=models.CASCADE, )
+    ingredients = models.ManyToManyField(Ingredient,
+                                         related_name='ingredients',
+                                         through='IngredientInRecipe',
+                                         verbose_name='Ингредиенты',
+                                         blank=False)
+    tags = models.ManyToManyField(Tag,
+                                  verbose_name='Тег',
+                                  blank=False)
     cooking_time = models.IntegerField(verbose_name='Время приготовления',
                                        help_text='Время в минутах',
                                        validators=[MaxValueValidator(240),
@@ -102,4 +98,4 @@ class IngredientInRecipe(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return f'{self.ingredient} in {self.recipe}'
+        return f'{self.ingredient} в {self.recipe}'

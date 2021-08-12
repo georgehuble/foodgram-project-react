@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'follow_api.apps.FollowConfig',
     'djoser',
     'colorfield',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
