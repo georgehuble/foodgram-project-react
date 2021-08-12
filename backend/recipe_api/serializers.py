@@ -2,7 +2,7 @@ from follow_api.models import Favourite, Shopping
 from rest_framework import serializers
 from user_api.serializers import UserDetailSerializer
 
-from .models import IngredientInRecipe, Ingredient, Recipe, Tag
+from .models import Ingredient, IngredientInRecipe, Recipe, Tag
 
 
 class TagSerializer(serializers.ModelSerializer):
