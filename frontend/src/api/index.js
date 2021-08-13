@@ -62,6 +62,7 @@ class Api {
     return fetch(
       `/api/auth/users/`,
       {
+
         method: 'POST',
         headers: this._headers,
         body: JSON.stringify({
@@ -388,7 +389,7 @@ class Api {
   downloadFile () {
     const token = localStorage.getItem('token')
     return fetch(
-      `/api/download_shopping_cart/`,
+      `/api/recipes/download_shopping_cart/`,
       {
         method: 'GET',
         headers: {

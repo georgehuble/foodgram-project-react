@@ -34,7 +34,7 @@ class Ingredient(models.Model):
         verbose_name_plural = 'Ингредиенты'
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.name} {self.measurement_unit}'
 
 
 class Recipe(models.Model):
@@ -56,10 +56,10 @@ class Recipe(models.Model):
                                          related_name='ingredients',
                                          through='IngredientInRecipe',
                                          verbose_name='Ингредиенты',
-                                         blank=False)
+                                         blank=True)
     tags = models.ManyToManyField(Tag,
                                   verbose_name='Тег',
-                                  blank=False)
+                                  blank=True)
     cooking_time = models.IntegerField(verbose_name='Время приготовления',
                                        help_text='Время в минутах',
                                        validators=[MaxValueValidator(240),
@@ -81,17 +81,16 @@ class IngredientInRecipe(models.Model):
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
-        verbose_name='Ингредиент в рецепте'
-    )
+        verbose_name='Ингредиент в рецепте')
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        verbose_name='Рецепт'
-    )
-    amount = models.PositiveSmallIntegerField(
-        null=True,
-        verbose_name='Количество ингредиента'
-    )
+        verbose_name='Рецепт')
+    amount = models.IntegerField(
+        validators=[MinValueValidator(0)],
+        verbose_name='Количество',
+        blank=False,
+        null=True)
 
     class Meta:
         verbose_name = 'Количество ингредиента в рецепте'
