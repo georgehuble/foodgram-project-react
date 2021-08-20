@@ -24,9 +24,18 @@ class RecipeListView(MixinsViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('author', 'name')
+    filterset_fields = ('author', 'name', 'tags')
     permission_classes = [permissions.AllowAny]
     pagination_class = TalentSearchpagination
+
+
+# class RecipeCreateView(MixinsViewSet):
+#     queryset = Recipe.objects.all()
+#     serializer_class = CreateRecipeSerializer
+#     filter_backends = (DjangoFilterBackend,)
+#     filterset_fields = ('author', 'name')
+#     permission_classes = [permissions.AllowAny]
+#     pagination_class = TalentSearchpagination
 
 
 class IngredientListView(MixinsViewSet):

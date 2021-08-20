@@ -27,7 +27,7 @@ class AdminTeg(admin.ModelAdmin):
 
 @admin.register(IngredientInRecipe)
 class AdminIngredientInRecipe(admin.ModelAdmin):
-    list_display = ('ingredient', 'recipe', 'amount')
+    list_display = ('ingredient', 'amount', 'recipe')
     search_fields = ('recipe',)
 
 
