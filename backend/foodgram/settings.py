@@ -10,6 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = os.getenv('KEY_SECRET')
 SECRET_KEY = 'django-insecure-n0obw=+vm^t%ddi4htqn+u%xdp^fe9_)+53zm6%59v4q7-v83c'
 
+# DEBUG = False
 DEBUG = True
 
 # ALLOWED_HOSTS = ['130.193.43.210', 'localhost', 'selesta.me', 'www.selesta.me']
@@ -73,27 +74,27 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 #         'PORT': '5432',
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'foodgram',
-#         'USER': 'george',
-#         'PASSWORD': 'georgeadmin',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE'),
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'foodgram',
+        'USER': 'george',
+        'PASSWORD': 'georgeadmin',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.getenv('DB_ENGINE'),
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('POSTGRES_USER'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': os.getenv('DB_PORT'),
+#     }
+# }
 
 AUTH_USER_MODEL = 'user_api.CustomUser'
 

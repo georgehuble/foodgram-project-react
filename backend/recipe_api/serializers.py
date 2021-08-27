@@ -7,40 +7,32 @@ from .models import Ingredient, Recipe, Tag, IngredientInRecipe
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ('id', 'name', 'color', 'slug')
         model = Tag
+        fields = ('id', 'name', 'color', 'slug')
 
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ('id', 'name', 'measurement_unit')
         model = Ingredient
+        fields = ('id', 'name', 'measurement_unit')
+
+    def to_internal_value(self, data):
+        return Ingredient.objects.get(id=data)
 
 
-# class RecipeSerializer(serializers.ModelSerializer):
-#     tag = TagSerializer(read_only=True, many=True)
-#     ingredients = IngredientSerializer(read_only=True, many=True)
-#     author = UserDetailSerializer(read_only=True)
-#     is_favorited = serializers.SerializerMethodField('check_if_is_favorited')
-#     is_in_shopping_cart = serializers.SerializerMethodField('check_if_is_in_shopping_cart')
-#
-#     def check_if_is_favorited(self, obj):
-#         user = self.context.get('request').user
-#         return Favourite.objects.filter(user=user, name=obj).exists()
-#
-#     def check_if_is_in_shopping_cart(self, obj):
-#         user = self.context.get('request').user
-#         return Shopping.objects.filter(user=user, name=obj).exists()
+# class AddIngredientToRecipeSerializer(serializers.ModelSerializer):
+#     name = serializers.PrimaryKeyRelatedField(queryset=Ingredient.objects.all())
+#     measurement_unit = serializers.PrimaryKeyRelatedField(queryset=Ingredient.objects.all())
 #
 #     class Meta:
-#         model = Recipe
-#         fields = ('author', 'name', 'image',
-#                   'text', 'ingredients', 'tag',
-#                   'cooking_time', 'is_favorited',
-#                   'is_in_shopping_cart')
+#         model = IngredientInRecipe
+#         fields = ('id', 'name', 'measurement_unit', 'amount')
 
 
 class AddIngredientToRecipeSerializer(serializers.ModelSerializer):
+    id = serializers.PrimaryKeyRelatedField(
+        source='ingredient', queryset=Ingredient.objects.all()
+    )
 
     class Meta:
         model = IngredientInRecipe
@@ -48,7 +40,7 @@ class AddIngredientToRecipeSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(read_only=True, many=True)
+    tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
     ingredients = AddIngredientToRecipeSerializer(many=True)
     author = UserDetailSerializer(read_only=True)
     is_favorited = serializers.SerializerMethodField('check_if_is_favorited')
@@ -62,9 +54,42 @@ class RecipeSerializer(serializers.ModelSerializer):
         user = self.context.get('request').user
         return Shopping.objects.filter(user=user, name=obj).exists()
 
+    def create(self, validated_data):
+        ingredients = validated_data.pop('ingredients')
+        tags = validated_data.pop('tags')
+        recipe = Recipe.objects.create(**validated_data)
+        recipe.tags.set(tags)
+
+        for ingredient in ingredients:
+            IngredientInRecipe.objects.create(
+                recipe=recipe,
+                ingredient=ingredient['ingredient'],
+                amount=ingredient['amount'],
+            )
+        return recipe
+
+    # def update(self, instance, validated_data):
+    #     ingredient_data = validated_data.pop('ingredients')
+    #     IngredientInRecipe.objects.filter(recipe=instance).delete()
+    #
+    #     for new_ingredient in ingredient_data:
+    #         IngredientInRecipe.objects.create(
+    #             ingredient=new_ingredient['id'],
+    #             recipe=instance,
+    #             amount=new_ingredient['amount']
+    #         )
+    #     instance.name = validated_data.pop('name')
+    #     instance.text = validated_data.pop('text')
+    #     instance.image = validated_data.pop('image')
+    #     instance.cooking_time = validated_data.pop('cooking_time')
+    #     instance.save()
+    #     return instance
+
     class Meta:
         model = Recipe
-        fields = ('author', 'name', 'image',
-                  'text', 'ingredients', 'tags',
-                  'cooking_time', 'is_favorited',
-                  'is_in_shopping_cart')
+        # fields = ('author', 'name', 'image',
+        #           'text', 'ingredients', 'tags',
+        #           'cooking_time', 'is_favorited',
+        #           'is_in_shopping_cart')
+        fields = '__all__'
+

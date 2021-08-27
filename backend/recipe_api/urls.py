@@ -9,9 +9,6 @@ router.register(r'tags',
 router.register(r'recipes',
                 RecipeListView,
                 basename='recipes')
-# router.register(r'recipes',
-#                 RecipeCreateView,
-#                 basename='recipes')
 router.register(r'ingredients',
                 IngredientListView,
                 basename='ingredients')

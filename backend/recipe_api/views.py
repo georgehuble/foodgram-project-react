@@ -1,10 +1,13 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, permissions
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from .models import Ingredient, Recipe, Tag
+from .permissions import MyCustomPermission
 from .serializers import IngredientSerializer, RecipeSerializer, TagSerializer
+from follow_api.models import Favourite, Shopping
+from django.db.models import Exists, OuterRef
 
 
 class TalentSearchpagination(PageNumberPagination):
@@ -25,17 +28,36 @@ class RecipeListView(MixinsViewSet):
     serializer_class = RecipeSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('author', 'name', 'tags')
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [MyCustomPermission]
     pagination_class = TalentSearchpagination
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
-# class RecipeCreateView(MixinsViewSet):
-#     queryset = Recipe.objects.all()
-#     serializer_class = CreateRecipeSerializer
-#     filter_backends = (DjangoFilterBackend,)
-#     filterset_fields = ('author', 'name')
-#     permission_classes = [permissions.AllowAny]
-#     pagination_class = TalentSearchpagination
+
+# class RecipeListView(ModelViewSet):
+#     filter_backends = [DjangoFilterBackend, ]
+#     filter_class = (DjangoFilterBackend,)
+#     permission_classes = [MyCustomPermission]
+#     serializer_class = RecipeSerializer
+#
+#     def get_queryset(self):
+#         user = self.request.user
+#         return Recipe.objects.annotate(
+#             is_favorited=Exists(
+#                 Favourite.objects.filter(
+#                     user=user, recipe_id=OuterRef('pk')
+#                 )
+#             ),
+#             is_in_shopping_cart=Exists(
+#                 Shopping.objects.filter(
+#                     user=user, recipe_id=OuterRef('pk')
+#                 )
+#             )
+#         )
+#
+#     def perform_create(self, serializer):
+#         serializer.save(author=self.request.user)
 
 
 class IngredientListView(MixinsViewSet):
