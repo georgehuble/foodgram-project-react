@@ -30,13 +30,26 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class AddIngredientToRecipeSerializer(serializers.ModelSerializer):
-    id = serializers.PrimaryKeyRelatedField(
-        source='ingredient', queryset=Ingredient.objects.all()
-    )
+    # id = serializers.PrimaryKeyRelatedField(
+    #     source='ingredient', queryset=Ingredient.objects.all()
+    # )
+    id = IngredientSerializer()
 
     class Meta:
         model = IngredientInRecipe
         fields = ('id', 'amount')
+
+
+class RecipeReadSerializer(serializers.ModelSerializer):
+    tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
+    ingredients = IngredientSerializer(many=True)
+    author = UserDetailSerializer(read_only=True)
+    # is_favorited = serializers.SerializerMethodField('check_if_is_favorited')
+    # is_in_shopping_cart = serializers.SerializerMethodField('check_if_is_in_shopping_cart')
+
+    class Meta:
+        model = Recipe
+        fields = '__all__'
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -62,12 +75,18 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         for ingredient in ingredients:
             IngredientInRecipe.objects.create(
+                ingredient=ingredient['id'],
                 recipe=recipe,
-                ingredient=ingredient['ingredient'],
                 amount=ingredient['amount'],
             )
         return recipe
 
+    def to_representation(self, instance):
+        data = RecipeReadSerializer(
+            instance,
+            context={'request': self.context.get('request')}
+        ).data
+        return data
     # def update(self, instance, validated_data):
     #     ingredient_data = validated_data.pop('ingredients')
     #     IngredientInRecipe.objects.filter(recipe=instance).delete()
@@ -87,9 +106,5 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        # fields = ('author', 'name', 'image',
-        #           'text', 'ingredients', 'tags',
-        #           'cooking_time', 'is_favorited',
-        #           'is_in_shopping_cart')
         fields = '__all__'
-
+        read_only_fields = ('author',)

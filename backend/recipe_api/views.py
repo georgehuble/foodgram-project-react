@@ -8,6 +8,7 @@ from .permissions import MyCustomPermission
 from .serializers import IngredientSerializer, RecipeSerializer, TagSerializer
 from follow_api.models import Favourite, Shopping
 from django.db.models import Exists, OuterRef
+from .service import IngridientFilter
 
 
 class TalentSearchpagination(PageNumberPagination):
@@ -63,10 +64,11 @@ class RecipeListView(MixinsViewSet):
 class IngredientListView(MixinsViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('name',)
+    # filter_backends = (DjangoFilterBackend,)
+    # filterset_fields = ('name',)
+    filterset_class = IngridientFilter
     permission_classes = [permissions.AllowAny]
-    pagination_class = TalentSearchpagination
+    # pagination_class = TalentSearchpagination
 
 
 class TagsView(MixinsViewSet):
