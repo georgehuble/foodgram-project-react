@@ -8,10 +8,7 @@ services:
       - ../backend/.env
 
   backend:
-#    image: georgehubdock/foodgram:latest
-    build:
-      context: ../backend
-      dockerfile: Dockerfile
+    image: georgehubdock/foodgram:latest
     restart: always
     depends_on:
       - db
@@ -29,7 +26,7 @@ services:
       - ../frontend:/app/result_build/
 
   nginx:
-    image: nginx:1.19.3
+    image: nginx:1.20.1
     ports:
       - "80:80"
     volumes:
