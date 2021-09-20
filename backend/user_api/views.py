@@ -1,7 +1,8 @@
-from recipe_api.views import TalentSearchpagination
 from rest_framework import mixins
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
+
+from recipe_api.views import TalentSearchpagination
 
 from .models import CustomUser
 from .serializers import UserDetailSerializer, UsersSerializer

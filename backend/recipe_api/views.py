@@ -1,13 +1,11 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, permissions
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 
 from .models import Ingredient, Recipe, Tag
 from .permissions import MyCustomPermission
 from .serializers import IngredientSerializer, RecipeSerializer, TagSerializer
-from follow_api.models import Favourite, Shopping
-from django.db.models import Exists, OuterRef
 from .service import IngridientFilter
 
 
@@ -36,39 +34,11 @@ class RecipeListView(MixinsViewSet):
         serializer.save(author=self.request.user)
 
 
-# class RecipeListView(ModelViewSet):
-#     filter_backends = [DjangoFilterBackend, ]
-#     filter_class = (DjangoFilterBackend,)
-#     permission_classes = [MyCustomPermission]
-#     serializer_class = RecipeSerializer
-#
-#     def get_queryset(self):
-#         user = self.request.user
-#         return Recipe.objects.annotate(
-#             is_favorited=Exists(
-#                 Favourite.objects.filter(
-#                     user=user, recipe_id=OuterRef('pk')
-#                 )
-#             ),
-#             is_in_shopping_cart=Exists(
-#                 Shopping.objects.filter(
-#                     user=user, recipe_id=OuterRef('pk')
-#                 )
-#             )
-#         )
-#
-#     def perform_create(self, serializer):
-#         serializer.save(author=self.request.user)
-
-
 class IngredientListView(MixinsViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
-    # filter_backends = (DjangoFilterBackend,)
-    # filterset_fields = ('name',)
     filterset_class = IngridientFilter
     permission_classes = [permissions.AllowAny]
-    # pagination_class = TalentSearchpagination
 
 
 class TagsView(MixinsViewSet):
