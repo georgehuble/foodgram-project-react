@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import UniqueConstraint
-
 from recipe_api.models import Recipe
 from user_api.models import CustomUser
 
