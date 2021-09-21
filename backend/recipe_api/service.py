@@ -8,7 +8,7 @@ class CharFilterInFilter(filters.BaseInFilter, filters.CharFilter):
 
 
 class IngridientFilter(filters.FilterSet):
-    name = CharFilterInFilter(field_name='name', lookup_expr='icontains')
+    name = CharFilterInFilter(field_name='name', lookup_expr='gt')
 
     class Meta:
         model = Ingredient
