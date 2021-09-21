@@ -5,7 +5,7 @@ from .models import Ingredient, IngredientInRecipe, Recipe, Tag
 
 @admin.register(Ingredient)
 class AdminIngredient(admin.ModelAdmin):
-    list_display = ('name', 'amount', 'measurement_unit')
+    list_display = ('name', 'measurement_unit', 'id')
     search_fields = ('name',)
 
 
@@ -27,7 +27,7 @@ class AdminTeg(admin.ModelAdmin):
 
 @admin.register(IngredientInRecipe)
 class AdminIngredientInRecipe(admin.ModelAdmin):
-    list_display = ('ingredient', 'recipe', 'amount')
+    list_display = ('ingredient', 'amount', 'recipe', 'id')
     search_fields = ('recipe',)
 
 

@@ -8,7 +8,7 @@ urlpatterns = [
          SubscribeView.as_view({'get': 'retrieve',
                                 'delete': 'destroy'}),
          name='subscribe'),
-    path('download_shopping_cart/',
+    path('recipes/download_shopping_cart/',
          download_shopping_cart),
     path('recipes/<id>/favorite/',
          FavouriteView.as_view({'get': 'retrieve',
