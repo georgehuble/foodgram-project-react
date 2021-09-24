@@ -1,3 +1,4 @@
+from drf_extra_fields.fields import Base64ImageField
 from follow_api.models import Favourite, Shopping
 from rest_framework import serializers
 from rest_framework.serializers import ReadOnlyField
@@ -37,6 +38,7 @@ class RecipeSerializer(serializers.ModelSerializer):
                                                   required=True)
     tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
     author = UserDetailSerializer(read_only=True)
+    image = Base64ImageField(max_length=None, use_url=True)
     is_favorited = serializers.SerializerMethodField('check_if_is_favorited')
     is_in_shopping_cart = serializers.SerializerMethodField('check_if_is_in_shopping_cart')
 
