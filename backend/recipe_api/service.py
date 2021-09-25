@@ -1,6 +1,6 @@
 from django_filters import rest_framework as filters
 
-from .models import Ingredient
+from .models import Ingredient, Tag
 
 
 class CharFilterInFilter(filters.BaseInFilter, filters.CharFilter):
@@ -19,5 +19,5 @@ class TagFilter(filters.FilterSet):
     id = CharFilterInFilter(field_name='id', lookup_expr='gt')
 
     class Meta:
-        model = Ingredient
+        model = Tag
         fields = ['id']
