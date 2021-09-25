@@ -13,6 +13,7 @@ class StandardResultsSetPagination(PageNumberPagination):
     page_size = 6
     page_size_query_param = 'page_size'
 
+
 class MixinsViewSet(mixins.CreateModelMixin,
                     mixins.RetrieveModelMixin,
                     mixins.UpdateModelMixin,
