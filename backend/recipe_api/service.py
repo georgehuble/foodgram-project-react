@@ -13,3 +13,11 @@ class IngridientFilter(filters.FilterSet):
     class Meta:
         model = Ingredient
         fields = ['name']
+
+
+class TagFilter(filters.FilterSet):
+    id = CharFilterInFilter(field_name='id', lookup_expr='gt')
+
+    class Meta:
+        model = Ingredient
+        fields = ['id']

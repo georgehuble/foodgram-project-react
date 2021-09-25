@@ -6,7 +6,7 @@ from rest_framework.viewsets import GenericViewSet
 from .models import Ingredient, Recipe, Tag
 from .permissions import MyCustomPermission
 from .serializers import IngredientSerializer, RecipeSerializer, TagSerializer
-from .service import IngridientFilter
+from .service import IngridientFilter, TagFilter
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -44,5 +44,5 @@ class IngredientListView(MixinsViewSet):
 class TagsView(MixinsViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-    filter_backends = (DjangoFilterBackend,)
     permission_classes = [permissions.AllowAny]
+    filterset_class = TagFilter
