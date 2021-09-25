@@ -28,6 +28,7 @@ class RecipeListView(MixinsViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('author', 'name', 'tags')
     permission_classes = [MyCustomPermission]
+    pagination_class = TalentSearchpagination
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
