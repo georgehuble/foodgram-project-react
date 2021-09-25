@@ -4,6 +4,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import GenericViewSet
 
 from .models import Ingredient, Recipe, Tag
+from .permissions import MyCustomPermission
 from .serializers import IngredientSerializer, RecipeSerializer, TagSerializer
 from .service import IngridientFilter
 
@@ -26,8 +27,7 @@ class RecipeListView(MixinsViewSet):
     serializer_class = RecipeSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('author', 'name', 'tags')
-    permission_classes = [permissions.AllowAny]
-    pagination_class = TalentSearchpagination
+    permission_classes = [MyCustomPermission]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
