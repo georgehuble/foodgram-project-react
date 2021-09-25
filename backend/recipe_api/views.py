@@ -21,9 +21,7 @@ class RecipeListView(MixinsViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('author', 'name', 'tags',
-                        'is_favorited',
-                        'is_in_shopping_cart')
+    filterset_fields = ('author', 'name', 'tags')
     permission_classes = [MyCustomPermission]
 
     def perform_create(self, serializer):
