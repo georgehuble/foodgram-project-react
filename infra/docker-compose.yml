@@ -8,13 +8,16 @@ services:
       - ../backend/.env
 
   backend:
-    image: georgehubdock/foodgram:latest
+#    image: georgehubdock/foodgram:latest
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
     restart: always
     depends_on:
       - db
     volumes:
-      - static_value:/static/
-      - media_value:/media/
+      - static_value:/code/static/
+      - media_value:/code/media/
     env_file:
       - ../backend/.env
 
