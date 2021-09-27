@@ -1,4 +1,3 @@
-from recipe_api.views import TalentSearchpagination
 from rest_framework import mixins
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
@@ -25,7 +24,6 @@ class UserDetailViewSet(ModelViewSet):
     serializer_class = UserDetailSerializer
     permission_classes = [IsAuthenticated]
     lookup_field = 'username'
-    pagination_class = TalentSearchpagination
 
     def get_queryset(self):
         return CustomUser.objects.filter(pk=self.kwargs.get('id'))

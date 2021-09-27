@@ -1,7 +1,6 @@
 from django.db.utils import IntegrityError
 from django_filters.rest_framework import DjangoFilterBackend
 from recipe_api.models import Recipe
-from recipe_api.views import TalentSearchpagination
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -79,7 +78,6 @@ class SubscribeListView(mixins.ListModelMixin,
     serializer_class = SubscribeSerializer
     filter_backends = (DjangoFilterBackend,)
     permission_classes = [permissions.IsAuthenticated]
-    pagination_class = TalentSearchpagination
 
     def get_queryset(self):
         return CustomUser.objects.filter(following__user=self.request.user)

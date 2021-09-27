@@ -1,3 +1,4 @@
+from drf_extra_fields.fields import Base64ImageField
 from follow_api.models import Favourite, Shopping
 from rest_framework import serializers
 from rest_framework.serializers import ReadOnlyField
@@ -32,11 +33,9 @@ class AddIngredientToRecipeSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    ingredients = AddIngredientToRecipeSerializer(source='ingredientinrecipe_set',
-                                                  many=True,
-                                                  required=True)
     tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
     author = UserDetailSerializer(read_only=True)
+    image = Base64ImageField(max_length=None, use_url=True)
     is_favorited = serializers.SerializerMethodField('check_if_is_favorited')
     is_in_shopping_cart = serializers.SerializerMethodField('check_if_is_in_shopping_cart')
 
@@ -55,8 +54,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         recipe.tags.set(tags)
         for ingredient in ingredients:
             IngredientInRecipe.objects.create(
-                ingredient_id=ingredient['id'],
                 recipe=recipe,
+                ingredient_id=ingredient['id'],
                 amount=ingredient['amount']
             )
         return recipe
@@ -82,3 +81,17 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = '__all__'
         depth = 1
+
+    def __init__(self, *args, **kwargs):
+        super(RecipeSerializer, self).__init__(*args, **kwargs)
+        try:
+            if self.context['request'].method in ['POST', 'PUT']:
+                self.fields['ingredients'] = AddIngredientToRecipeSerializer(
+                    source='ingredientinrecipe',
+                    many=True)
+            else:
+                self.fields['ingredients'] = AddIngredientToRecipeSerializer(
+                    source='ingredientinrecipe_set',
+                    many=True)
+        except KeyError:
+            pass

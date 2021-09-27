@@ -9,9 +9,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('KEY_SECRET')
 
-DEBUG = False
+# DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['130.193.43.210', 'localhost', 'selesta.me', 'www.selesta.me']
+# ALLOWED_HOSTS = ['130.193.43.210', 'localhost', 'selesta.me', 'www.selesta.me']
+# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -28,6 +31,7 @@ INSTALLED_APPS = [
     'djoser',
     'colorfield',
     'django_filters',
+    'drf_extra_fields',
 ]
 
 MIDDLEWARE = [
@@ -115,6 +119,7 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
 }
+
 
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',

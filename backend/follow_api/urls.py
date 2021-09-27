@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .utils import download_shopping_cart
-from .views import FavouriteView, ShoppingView, SubscribeView
+from .views import FavouriteView, ShoppingView, SubscribeView, SubscribeListView
 
 urlpatterns = [
     path('users/<id>/subscribe/',

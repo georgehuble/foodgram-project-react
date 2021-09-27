@@ -1,7 +1,6 @@
 from colorfield.fields import ColorField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from drf_extra_fields.fields import Base64ImageField
 from user_api.models import CustomUser
 
 
@@ -57,8 +56,8 @@ class Recipe(models.Model):
         max_length=30,
         verbose_name='Название',
         blank=False)
-    image = Base64ImageField(
-        upload_to='user_api/',
+    image = models.ImageField(
+        upload_to='',
         blank=False,
         verbose_name='Изображение')
     text = models.TextField(
