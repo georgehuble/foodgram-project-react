@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, permissions
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import GenericViewSet
@@ -28,6 +29,7 @@ class RecipeListView(MixinsViewSet):
     filterset_class = RecipeFilter
     permission_classes = [MyCustomPermission]
     pagination_class = StandardResultsSetPagination
+    filter_backends = [DjangoFilterBackend]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

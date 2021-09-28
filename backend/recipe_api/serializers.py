@@ -1,6 +1,7 @@
 from drf_extra_fields.fields import Base64ImageField
 from follow_api.models import Favourite, Shopping
 from rest_framework import serializers
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.serializers import ReadOnlyField
 from user_api.serializers import UserDetailSerializer
 
@@ -24,16 +25,15 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 class AddIngredientToRecipeSerializer(serializers.ModelSerializer):
     id = ReadOnlyField(source='ingredient.id')
-    ingredient = ReadOnlyField(source='ingredient.name')
+    name = ReadOnlyField(source='ingredient.name')
     measurement_unit = ReadOnlyField(source='ingredient.measurement_unit')
 
     class Meta:
         model = IngredientInRecipe
-        fields = ['id', 'ingredient', 'measurement_unit', 'amount']
+        fields = ['id', 'name', 'measurement_unit', 'amount']
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
     author = UserDetailSerializer(read_only=True)
     image = Base64ImageField(max_length=None, use_url=True)
     is_favorited = serializers.SerializerMethodField('check_if_is_favorited')
@@ -89,6 +89,7 @@ class RecipeSerializer(serializers.ModelSerializer):
                 self.fields['ingredients'] = AddIngredientToRecipeSerializer(
                     source='ingredientinrecipe',
                     many=True)
+                self.fields['tags'] = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
             else:
                 self.fields['ingredients'] = AddIngredientToRecipeSerializer(
                     source='ingredientinrecipe_set',
