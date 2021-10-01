@@ -5,7 +5,6 @@ from rest_framework import serializers
 from rest_framework.serializers import ReadOnlyField
 from user_api.serializers import UserSerializer
 
-
 from .models import Ingredient, IngredientInRecipe, Recipe, Tag
 
 
