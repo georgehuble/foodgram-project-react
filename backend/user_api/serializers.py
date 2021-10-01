@@ -60,5 +60,5 @@ class TokenRefreshNoPasswordSerializer(TokenRefreshSerializer):
 
     def validate(self, attrs):
         attrs.update({'refresh':
-                          self.context['request'].data.get('confirmation_code')})
+                     self.context['request'].data.get('confirmation_code')})
         return super().validate(attrs)

@@ -3,7 +3,6 @@ from follow_api.models import Favourite
 from rest_framework import serializers
 from rest_framework.serializers import ReadOnlyField
 from user_api.serializers import UserSerializer
-
 from recipe_api.models import Shopping
 
 from .models import Ingredient, IngredientInRecipe, Recipe, Tag
