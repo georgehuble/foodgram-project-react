@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from recipe_api.models import Recipe
+from rest_framework import serializers
 from user_api.models import CustomUser
 
 from .models import Subscribe

@@ -1,8 +1,7 @@
+from recipe_api.views import StandardResultsSetPagination
 from rest_framework import mixins
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import GenericViewSet
-
-from recipe_api.views import StandardResultsSetPagination
 
 from .models import CustomUser
 from .serializers import UserSerializer

@@ -1,12 +1,11 @@
 from django.db.utils import IntegrityError
 from django_filters.rest_framework import DjangoFilterBackend
+from recipe_api.models import Recipe, Shopping
+from recipe_api.views import StandardResultsSetPagination
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-
-from recipe_api.models import Recipe, Shopping
-from recipe_api.views import StandardResultsSetPagination
 from user_api.models import CustomUser
 
 from . import serializers

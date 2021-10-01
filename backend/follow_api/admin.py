@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from recipe_api.models import Shopping
 
 from .models import Favourite, Subscribe
