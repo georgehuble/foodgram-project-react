@@ -9,12 +9,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('KEY_SECRET')
 
-# DEBUG = False
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ['130.193.43.210', 'localhost', 'selesta.me', 'www.selesta.me']
-# ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['130.193.43.210', 'localhost', 'selesta.me', 'www.selesta.me']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -127,7 +124,9 @@ DJOSER = {
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
-         'user_create': 'user_api.serializers.UserRegistrationSerializer'
+         'user_create': 'user_api.serializers.UserRegistrationSerializer',
+         'user': 'user_api.serializers.UserSerializer',
+         'current_user': 'user_api.serializers.UserSerializer',
     }
 }
 

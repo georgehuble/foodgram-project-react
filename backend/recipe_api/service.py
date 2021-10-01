@@ -1,8 +1,7 @@
 from django_filters import rest_framework as filters
-from rest_framework import serializers
+
 from .models import Ingredient, Recipe
-from follow_api.models import Favourite, Shopping
-from .serializers import RecipeSerializer
+
 
 class CharFilterInFilter(filters.BaseInFilter, filters.CharFilter):
     pass

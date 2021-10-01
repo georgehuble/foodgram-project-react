@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import UniqueConstraint
+
 from recipe_api.models import Recipe
 from user_api.models import CustomUser
 
@@ -38,20 +39,3 @@ class Subscribe(models.Model):
 
     def __str__(self):
         return self.author.username
-
-
-class Shopping(models.Model):
-    name = models.ForeignKey(Recipe, on_delete=models.CASCADE,
-                             verbose_name='Название рецепта')
-
-    user = models.ForeignKey(CustomUser,
-                             on_delete=models.CASCADE,
-                             verbose_name='Пользователь')
-
-    class Meta:
-        unique_together = ('name', 'user')
-        verbose_name = 'покупки'
-        verbose_name_plural = 'Покупки'
-
-    def __str__(self):
-        return f'{self.name}'

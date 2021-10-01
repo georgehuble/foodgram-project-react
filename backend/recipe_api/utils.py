@@ -1,9 +1,11 @@
 from django.http import HttpResponse
-from recipe_api.models import IngredientInRecipe
-from rest_framework.decorators import api_view
-from follow_api.models import Shopping
+from rest_framework import permissions
+from rest_framework.decorators import api_view, permission_classes
+
+from .models import IngredientInRecipe, Shopping
 
 
+@permission_classes([permissions.IsAuthenticated])
 @api_view(['GET'])
 def download_shopping_cart(request):
     user = request.user
@@ -27,7 +29,7 @@ def download_shopping_cart(request):
     wishlist = []
     for name, data in buying_list.items():
         wishlist.append(
-            f"{name} - {data['amount']} ({data['measurement_unit']} \n")
+            f"{name} - {data['amount']} {data['measurement_unit']}. \n")
     response = HttpResponse(wishlist, content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename="wishlist.txt"'
     return response

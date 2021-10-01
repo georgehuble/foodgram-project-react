@@ -26,7 +26,7 @@ class CustomUser(AbstractUser):
         return self.email
 
     def __str__(self):
-        return self.email
+        return self.username
 
     class Meta:
         verbose_name = 'Пользователь'

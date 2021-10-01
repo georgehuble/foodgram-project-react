@@ -1,29 +1,24 @@
 from rest_framework import mixins
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.permissions import AllowAny
+from rest_framework.viewsets import GenericViewSet
+
+from recipe_api.views import StandardResultsSetPagination
 
 from .models import CustomUser
-from .serializers import UserDetailSerializer, UsersSerializer
+from .serializers import UserSerializer
 
 
-class MixinsViewSet(mixins.ListModelMixin,
+class MixinsViewSet(mixins.RetrieveModelMixin,
+                    mixins.ListModelMixin,
                     mixins.DestroyModelMixin,
                     mixins.CreateModelMixin,
                     GenericViewSet):
     pass
 
 
-class UsersViewSet(ModelViewSet):
+class UserViewSet(MixinsViewSet):
     queryset = CustomUser.objects.all()
-    serializer_class = UsersSerializer
+    serializer_class = UserSerializer
     permission_classes = [AllowAny]
     lookup_field = 'username'
-
-
-class UserDetailViewSet(ModelViewSet):
-    serializer_class = UserDetailSerializer
-    permission_classes = [IsAuthenticated]
-    lookup_field = 'username'
-
-    def get_queryset(self):
-        return CustomUser.objects.filter(pk=self.kwargs.get('id'))
+    pagination_class = StandardResultsSetPagination

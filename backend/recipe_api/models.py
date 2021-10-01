@@ -1,6 +1,7 @@
 from colorfield.fields import ColorField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+
 from user_api.models import CustomUser
 
 
@@ -111,3 +112,20 @@ class IngredientInRecipe(models.Model):
 
     def __str__(self):
         return f'{self.ingredient} в {self.recipe}'
+
+
+class Shopping(models.Model):
+    name = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                             verbose_name='Название рецепта')
+
+    user = models.ForeignKey(CustomUser,
+                             on_delete=models.CASCADE,
+                             verbose_name='Пользователь')
+
+    class Meta:
+        unique_together = ('name', 'user')
+        verbose_name = 'покупки'
+        verbose_name_plural = 'Покупки'
+
+    def __str__(self):
+        return f'{self.name}'

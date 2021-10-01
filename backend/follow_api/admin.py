@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import Favourite, Shopping, Subscribe
+from recipe_api.models import Shopping
+
+from .models import Favourite, Subscribe
 
 
 @admin.register(Favourite)

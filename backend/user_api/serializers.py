@@ -1,10 +1,12 @@
 from django.core.mail import mail_admins, send_mail
 from djoser.serializers import \
     UserCreateSerializer as BaseUserRegistrationSerializer
-from follow_api.models import Subscribe
+from djoser.serializers import UserSerializer as BaseUsernameSerializer
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import (TokenObtainPairSerializer,
                                                   TokenRefreshSerializer)
+
+from follow_api.models import Subscribe
 
 from .models import CustomUser
 
@@ -16,15 +18,7 @@ class UserRegistrationSerializer(BaseUserRegistrationSerializer):
                   'first_name', 'last_name')
 
 
-class UsersSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = CustomUser
-        fields = ('email', 'username',
-                  'first_name', 'last_name')
-
-
-class UserDetailSerializer(serializers.ModelSerializer):
+class UserSerializer(BaseUsernameSerializer):
     is_subscribed = serializers.SerializerMethodField('check_if_is_subscribed')
 
     def check_if_is_subscribed(self, obj):
@@ -33,16 +27,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'username',
-                  'first_name', 'last_name',
-                  'is_subscribed')
-
-
-class UserMeSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = CustomUser
-        fields = ('email', 'username',
+        fields = ('email', 'id', 'username',
                   'first_name', 'last_name',
                   'is_subscribed')
 
@@ -57,7 +42,7 @@ class TokenObtainPairNoPasswordSerializer(TokenObtainPairSerializer):
         data = super(TokenObtainPairNoPasswordSerializer,
                      self).validate(attrs)
         user = CustomUser.objects.get(email=self.context['request'].data.get('email')
-                                )
+                                      )
         data = data["refresh"]
         send_mail(
             'Ваш confirmation_code',
@@ -76,5 +61,5 @@ class TokenRefreshNoPasswordSerializer(TokenRefreshSerializer):
 
     def validate(self, attrs):
         attrs.update({'refresh':
-                      self.context['request'].data.get('confirmation_code')})
+                          self.context['request'].data.get('confirmation_code')})
         return super().validate(attrs)
