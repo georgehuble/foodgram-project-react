@@ -41,11 +41,17 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def check_if_is_favorited(self, obj):
         user = self.context.get('request').user
-        return Favourite.objects.filter(user=user, name=obj).exists()
+        try:
+            return Favourite.objects.filter(user=user, name=obj).exists()
+        except TypeError:
+            return Favourite.objects.filter(name=obj).exists()
 
     def check_if_is_in_shopping_cart(self, obj):
         user = self.context.get('request').user
-        return Shopping.objects.filter(user=user, name=obj).exists()
+        try:
+            return Shopping.objects.filter(user=user, name=obj).exists()
+        except TypeError:
+            return Shopping.objects.filter(name=obj).exists()
 
     def create(self, validated_data):
         ingredients = self.context['request'].data['ingredients']

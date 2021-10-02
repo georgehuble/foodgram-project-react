@@ -22,7 +22,10 @@ class UserSerializer(BaseUsernameSerializer):
 
     def check_if_is_subscribed(self, obj):
         user = self.context.get('request').user
-        return Subscribe.objects.filter(user=user, author=obj).exists()
+        try:
+            return Subscribe.objects.filter(user=user, author=obj).exists()
+        except TypeError:
+            return Subscribe.objects.filter(author=obj).exists()
 
     class Meta:
         model = CustomUser
