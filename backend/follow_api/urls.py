@@ -1,9 +1,12 @@
 from django.urls import path
 
 from .views import FavouriteView, ShoppingView, SubscribeView
+from user_api.views import UserViewSet
 
 urlpatterns = [
-
+    path('users/<id>/',
+         UserViewSet.as_view({'get': 'retrieve'}),
+         name='user'),
     path('users/<id>/subscribe/',
          SubscribeView.as_view({'get': 'retrieve',
                                 'delete': 'destroy'}),

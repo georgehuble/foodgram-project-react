@@ -67,16 +67,16 @@ class RecipeSerializer(serializers.ModelSerializer):
         return recipe
 
     def update(self, instance, validated_data):
-        # ingredient_data = validated_data.pop('ingredients')
         ingredient_data = self.context['request'].data['ingredients']
         IngredientInRecipe.objects.filter(recipe=instance).delete()
-
         for new_ingredient in ingredient_data:
             IngredientInRecipe.objects.create(
                 recipe=instance,
                 ingredient_id=new_ingredient['id'],
                 amount=new_ingredient['amount']
             )
+        tags_data = validated_data.pop('tags')
+        instance.tags.set(tags_data)
         instance.name = validated_data.pop('name')
         instance.text = validated_data.pop('text')
         instance.image = validated_data.pop('image')
@@ -96,6 +96,8 @@ class RecipeSerializer(serializers.ModelSerializer):
                 self.fields['ingredients'] = AddIngredientToRecipeSerializer(
                     source='ingredientinrecipe',
                     many=True)
+                self.fields['tags'] = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
+            elif self.context['request'].method in ['PATCH']:
                 self.fields['tags'] = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
             else:
                 self.fields['ingredients'] = AddIngredientToRecipeSerializer(

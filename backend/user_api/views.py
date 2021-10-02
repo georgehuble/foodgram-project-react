@@ -7,10 +7,8 @@ from .models import CustomUser
 from .serializers import UserSerializer
 
 
-class MixinsViewSet(mixins.RetrieveModelMixin,
-                    mixins.ListModelMixin,
-                    mixins.DestroyModelMixin,
-                    mixins.CreateModelMixin,
+class MixinsViewSet(mixins.ListModelMixin,
+                    mixins.RetrieveModelMixin,
                     GenericViewSet):
     pass
 
@@ -19,5 +17,5 @@ class UserViewSet(MixinsViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
-    lookup_field = 'username'
+    lookup_field = 'id'
     pagination_class = StandardResultsSetPagination
