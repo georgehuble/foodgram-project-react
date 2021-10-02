@@ -67,13 +67,14 @@ class RecipeSerializer(serializers.ModelSerializer):
         return recipe
 
     def update(self, instance, validated_data):
-        ingredient_data = validated_data.pop('ingredients')
+        # ingredient_data = validated_data.pop('ingredients')
+        ingredient_data = self.context['request'].data['ingredients']
         IngredientInRecipe.objects.filter(recipe=instance).delete()
 
         for new_ingredient in ingredient_data:
             IngredientInRecipe.objects.create(
-                ingredient=new_ingredient['id'],
                 recipe=instance,
+                ingredient_id=new_ingredient['id'],
                 amount=new_ingredient['amount']
             )
         instance.name = validated_data.pop('name')
@@ -91,7 +92,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super(RecipeSerializer, self).__init__(*args, **kwargs)
         try:
-            if self.context['request'].method in ['POST', 'PUT']:
+            if self.context['request'].method in ['POST']:
                 self.fields['ingredients'] = AddIngredientToRecipeSerializer(
                     source='ingredientinrecipe',
                     many=True)
