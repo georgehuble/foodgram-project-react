@@ -66,23 +66,20 @@ class RecipeSerializer(serializers.ModelSerializer):
             )
         return recipe
 
-    def update(self, instance, validated_data):
-        ingredient_data = self.context['request'].data['ingredients']
-        IngredientInRecipe.objects.filter(recipe=instance).delete()
-        for new_ingredient in ingredient_data:
-            IngredientInRecipe.objects.create(
-                recipe=instance,
-                ingredient_id=new_ingredient['id'],
-                amount=new_ingredient['amount']
-            )
-        tags_data = validated_data.pop('tags')
-        instance.tags.set(tags_data)
-        instance.name = validated_data.pop('name')
-        instance.text = validated_data.pop('text')
-        instance.image = validated_data.pop('image')
-        instance.cooking_time = validated_data.pop('cooking_time')
-        instance.save()
-        return instance
+    def update(self, recipe, validated_data):
+        recipe.name = validated_data.get('name', recipe.name)
+        recipe.text = validated_data.get('text', recipe.text)
+        recipe.image = validated_data.get('image', recipe.image)
+        recipe.cooking_time = validated_data.get('cooking_time', recipe.cooking_time)
+        if 'ingredient' in self.initial_data:
+            ingredients = validated_data.pop('ingredients')
+            recipe.ingredients.clear()
+            ingredients(ingredients, recipe)
+        if 'tags' in self.initial_data:
+            tags_data = validated_data.pop('tags')
+            recipe.tags.set(tags_data)
+            recipe.save()
+            return recipe
 
     class Meta:
         model = Recipe

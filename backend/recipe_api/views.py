@@ -30,6 +30,7 @@ class RecipeListView(MixinsViewSet):
     permission_classes = [MyCustomPermission]
     pagination_class = StandardResultsSetPagination
     filter_backends = [DjangoFilterBackend]
+    lookup_field = 'id'
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
