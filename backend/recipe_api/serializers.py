@@ -79,7 +79,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             tags_data = validated_data.pop('tags')
             recipe.tags.set(tags_data)
             recipe.save()
-            return recipe
+        return recipe
 
     class Meta:
         model = Recipe
