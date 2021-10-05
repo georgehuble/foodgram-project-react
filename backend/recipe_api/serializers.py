@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from drf_extra_fields.fields import Base64ImageField
 from follow_api.models import Favourite
 from recipe_api.models import Shopping
@@ -27,6 +28,14 @@ class AddIngredientToRecipeSerializer(serializers.ModelSerializer):
     id = ReadOnlyField(source='ingredient.id')
     name = ReadOnlyField(source='ingredient.name')
     measurement_unit = ReadOnlyField(source='ingredient.measurement_unit')
+    amount = serializers.IntegerField(
+        validators=[
+            MinValueValidator(
+                1,
+                'Убедитесь, что количество ингредиента больше или равно 1'
+            )
+        ]
+    )
 
     class Meta:
         model = IngredientInRecipe
@@ -36,6 +45,14 @@ class AddIngredientToRecipeSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
     image = Base64ImageField(max_length=None, use_url=True)
+    cooking_time = serializers.IntegerField(
+        validators=[
+            MinValueValidator(
+                1,
+                'Убедитесь, что время приготовления не менее 1'
+            )
+        ]
+    )
     is_favorited = serializers.SerializerMethodField('check_if_is_favorited')
     is_in_shopping_cart = serializers.SerializerMethodField('check_if_is_in_shopping_cart')
 
@@ -80,6 +97,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             recipe.tags.set(tags_data)
             recipe.save()
         return recipe
+
 
     class Meta:
         model = Recipe
