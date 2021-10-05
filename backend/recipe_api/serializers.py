@@ -98,7 +98,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             recipe.save()
         return recipe
 
-
     class Meta:
         model = Recipe
         fields = '__all__'
